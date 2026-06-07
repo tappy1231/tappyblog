@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tappy | Security Research Log</title>
+    <style>
+        :root {
+            --bg-center: #1a1a1a;
+            --bg-edge: #020202;
+            --accent: #00ff00; 
+            --text-main: #e0e0e0;
+        }
+
+        body {
+            margin: 0;
+            background: radial-gradient(circle at center, var(--bg-center) 0%, var(--bg-edge) 85%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+            box-sizing: border-box;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .cat-img {
+            width: 300px;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+            border: 1px solid #333;
+        }
+
+        h1 {
+            font-size: 4rem;
+            color: #fff;
+            margin-top: 20px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-shadow: 0 0 10px rgba(255,255,255,0.2);
+        }
+
+        #blog-container {
+            max-width: 900px;
+            width: 100%;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 80px;
+            white-space: pre-wrap; 
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2rem;
+            background-color: var(--accent);
+            animation: blink 1s infinite;
+            vertical-align: text-bottom;
+            margin-left: 5px;
+        }
+
+        .terminal {
+            width: 100%;
+            max-width: 900px;
+            background: #000;
+            border: 1px solid #004400;
+            padding: 30px;
+            color: var(--accent);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        .terminal p { margin: 8px 0; }
+        .terminal a { color: var(--accent); text-decoration: none; border-bottom: 1px dashed var(--accent); }
+        .terminal a:hover { color: #fff; border-bottom: 1px solid #fff; }
+
+        .prompt::before {
+            content: "C:\\TAPPY\\LOGS> ";
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero">
+        <img src="https://i.ibb.co/RGQHcRKN/Screenshot-2026-06-07-013224.png" alt="Profile Image" class="cat-img">
+        <h1>Tappy</h1>
+    </div>
+
+    <div id="blog-container">
+        <span id="blog-text"></span><span class="cursor"></span>
+    </div>
+
+    <div class="terminal">
+        <p class="prompt">color 02</p>
+        <p class="prompt">system_status: online</p>
+        <p class="prompt">GitHub: <a href="https://github.com/tappy1231" target="_blank">github.com/tappy1231</a></p>
+        <p class="prompt">TikTok: <a href="https://tiktok.com/@skidnr1" target="_blank">tiktok.com/@skidnr1</a></p>
+        <p class="prompt">&copy; 2026 Tappy. All rights reserved.</p>
+    </div>
+
+    <script>
+        const fullBlog = `SECURITY RESEARCH LOG: 06-07-2026\n\nIn the landscape of modern cybersecurity, the distinction between a 'defender' and an 'attacker' is merely a matter of perspective. To effectively secure a system, one must possess the mindset of a threat actor. This is why I focus on deconstructing exploit methodologies.\n\nWhen we analyze how hackers do what they do, we are essentially performing a post-mortem on logical failures. Most breaches are not caused by 'magic,' but by the systematic abuse of misconfigurations, unpatched vulnerabilities, and human social engineering. My research delves into lateral movement—the phase after the initial entry—where an attacker pivots through a network to escalate privileges.\n\nThink of an enterprise network as a fortress. The perimeter firewall is the moat, but internal lateral movement is like a spy navigating the castle corridors. Hackers use tools like Mimikatz or BloodHound to map these 'corridors,' identifying which accounts have access to sensitive data. My goal is to map these paths before the adversary does. By identifying the 'low-hanging fruit'—the credentials left in memory, the overly permissive service accounts, or the misconfigured cloud buckets—we can apply the principle of least privilege to close these doors permanently.\n\nThe 'how' is constant, but the 'what' is always changing. As we move into an era dominated by AI-driven automated scanning, the speed at which vulnerabilities are weaponized has increased tenfold. We are no longer dealing with manual exploitation; we are dealing with race conditions against automated scripts that check for CVEs seconds after they are published.\n\nMy work involves building honeypots and deception technologies to catch these scripts. By creating fake, attractive targets, we can study the behavior of automated malware in real-time. This provides the telemetry needed to harden the actual production environment.\n\nSecurity is not a static destination; it is an iterative process of breaking and rebuilding. Every time we patch, we change the surface area of the attack. Every time we implement MFA, we force the attacker to move to social engineering. This cycle is endless, and that is exactly why it is so engaging.\n\nHe/him. Always learning. Always securing.`;
+
+        const textElement = document.getElementById("blog-text");
+        let charIndex = 0;
+
+        function rapidType() {
+            if (charIndex < fullBlog.length) {
+                textElement.textContent += fullBlog.substring(charIndex, charIndex + 4);
+                charIndex += 4;
+                setTimeout(rapidType, 10);
+            }
+        }
+
+        window.onload = rapidType;
+    </script>
+</body>
+</html>
